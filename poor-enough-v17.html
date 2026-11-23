@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>We do not live to survive: poverty and the safety net in Kazakhstan</title>
+<meta name="description" content="A PLS519 project on the gap between Kazakhstan's poverty line and its targeted social assistance line, and an AI outreach tool with its costs.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#0aa3c2;--sky-deep:#06738a;--sky-pale:#e3f4f8;--gold:#f5b800;--gold-ink:#8a6500;--gold-pale:#fff2c7;--ink:#0d2a36;--ink2:#3e5a66;--muted:#6f8790;--paper:#ffffff;--wash:#f3f8f9;--line:#d6e5e9;--ok:#1f8a54;--max:1040px}
+@media (prefers-color-scheme:dark){:root{--sky:#34c0dc;--sky-deep:#7fd6e8;--sky-pale:#123540;--gold:#ffc929;--gold-ink:#ffd65c;--gold-pale:#3a3115;--ink:#eaf4f6;--ink2:#b8cdd3;--muted:#87a0a8;--paper:#0f2028;--wash:#0b1a21;--line:#24404a;--ok:#4cc488}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--wash);color:var(--ink);font:17.5px/1.65 "Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.big,.nav b{font-family:Unbounded,"Golos Text",system-ui,sans-serif}
+a{color:var(--sky-deep)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+p{max-width:68ch}
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:20px;align-items:center;overflow-x:auto;white-space:nowrap;padding-top:11px;padding-bottom:11px;font-size:14.5px}
+.nav b{font-size:14px;margin-right:6px}
+.nav a{color:var(--ink2);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;background:var(--gold);width:0}
+
+/* Hero */
+.hero{background:linear-gradient(180deg,var(--sky-pale),var(--wash));padding:64px 0 40px}
+.hero h1{max-width:12ch;font-size:clamp(40px,7.4vw,92px);line-height:.95;letter-spacing:-.02em;margin:0;font-weight:800}
+.hero h1 .q{color:var(--gold);-webkit-text-stroke:0}
+.hero .sub{font-family:Unbounded,sans-serif;font-weight:500;font-size:clamp(18px,2.6vw,26px);margin:14px 0 26px;color:var(--ink2)}
+.hero .lede{font-size:20px;max-width:58ch}
+.crowd{margin:34px 0 8px;display:grid;grid-template-columns:repeat(20,1fr);gap:6px;max-width:760px}
+.crowd svg{width:100%;height:auto}
+.crowd .p{fill:var(--gold);transition:fill .5s ease, transform .5s ease;transform-origin:50% 100%}
+.crowd .p.tsa{fill:var(--sky)}
+.legend{display:flex;flex-wrap:wrap;gap:22px;font-size:15px;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.tiny{font-size:13px;color:var(--muted);max-width:76ch}
+
+section{padding:70px 0}
+section+section{border-top:1px solid var(--line)}
+.num{font-family:Unbounded,sans-serif;font-weight:700;color:var(--sky);font-size:15px;margin-bottom:8px}
+h2{font-size:clamp(28px,4.4vw,44px);line-height:1.08;letter-spacing:-.01em;margin:0 0 22px;font-weight:700;max-width:22ch}
+h3{font-size:19px;margin:30px 0 10px;font-weight:700}
+
+/* Problem */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin:28px 0;border-top:2px solid var(--ink)}
+.fact{padding:16px 18px 18px 0}
+.fact .big{font-size:40px;font-weight:700;line-height:1.05;display:block}
+.fact.g .big{color:var(--gold-ink)}
+.fact span{color:var(--ink2);font-size:15px}
+.question{font-family:Unbounded,sans-serif;font-weight:500;font-size:clamp(20px,2.6vw,26px);line-height:1.35;background:var(--gold-pale);padding:26px 28px;border-radius:22px 22px 22px 4px;margin:34px 0 0;max-width:820px}
+
+/* Figures */
+figure{margin:30px 0;background:var(--paper);border-radius:18px;padding:22px 22px 16px;border:1px solid var(--line)}
+figure h3{margin:0 0 4px;font-size:18px}
+figcaption,.note{font-size:13.5px;color:var(--muted)}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:"Golos Text",system-ui,sans-serif;font-size:12.5px;fill:var(--ink2)}
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--ink2)}
+.demo{border:2px dashed var(--gold);background:var(--gold-pale);border-radius:18px;padding:20px 24px;margin:30px 0}
+.stamp{display:inline-block;font-weight:700;font-size:14px;background:var(--gold);color:#2b2000;border-radius:999px;padding:4px 12px;margin-bottom:6px}
+
+/* Research */
+.approaches{list-style:none;padding:0;margin:20px 0;display:grid;gap:2px}
+.approaches li{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.approaches .letter{font-family:Unbounded,sans-serif;font-weight:800;font-size:28px;color:var(--sky);line-height:1}
+.approaches b{display:block}
+.miss{color:var(--gold-ink);font-weight:600}
+
+/* Solution */
+.pipeline.two{grid-template-columns:repeat(2,1fr)}
+.pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:26px 0;position:relative}
+.step{padding:22px 22px 22px 0;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;right:12px;top:40px;width:22px;height:2px;background:var(--line)}
+.step .kind{display:inline-block;font-size:13px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--sky-pale);color:var(--sky-deep)}
+.step.ai .kind{background:var(--ink);color:var(--paper)}
+.step h3{margin:10px 0 6px;font-size:21px}
+.motto{font-family:Unbounded,sans-serif;font-weight:700;font-size:clamp(20px,3vw,30px);line-height:1.25;margin:24px 0;color:var(--ink)}
+.motto span{display:block;color:var(--sky-deep)}
+.motto span:last-child{color:var(--gold-ink)}
+@media (max-width:760px){.pipeline{grid-template-columns:1fr}.step:not(:last-child)::after{display:none}}
+
+/* Calculator */
+.shocks{border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:18px 0 0;display:grid;gap:8px}
+.shocks legend{font-weight:600;padding:0 6px}
+.shocks label{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.shocks input[type=checkbox]{width:18px;height:18px;margin:0;accent-color:var(--sky-deep)}
+.shocks input[type=number]{width:72px;margin:0;padding:4px 8px}
+.shocks .src{font-size:13px;color:var(--muted,#6b7c85)}
+.shockres{margin:8px 0 0;padding-left:20px}
+.calc{background:var(--paper);border-radius:22px;padding:26px;border:1px solid var(--line)}
+.presets{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.presets button{font:600 14.5px "Golos Text",sans-serif;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.presets button:hover,.presets button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label{display:block;font-size:14px;color:var(--ink2);font-weight:600}
+input,select{width:100%;margin-top:5px;padding:10px 12px;font:16px "Golos Text",sans-serif;border:1.5px solid var(--line);border-radius:10px;background:var(--wash);color:var(--ink)}
+.meter{margin:26px 0 8px}
+.verdictline{font-family:Unbounded,sans-serif;font-weight:700;font-size:22px;margin:16px 0 4px}
+.verdictline.gap{color:var(--gold-ink)}.verdictline.tsa{color:var(--sky-deep)}.verdictline.ok{color:var(--ok)}
+#marker{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+
+/* Costs */
+.costs{display:grid;gap:0;margin:22px 0;border-top:2px solid var(--ink)}
+.cost{display:grid;grid-template-columns:170px 120px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:start}
+.cost b{font-size:17px}
+.cost p{margin:0}
+.meterdots{display:flex;gap:5px;padding-top:6px}
+.meterdots i{width:16px;height:16px;border-radius:50%;background:var(--line)}
+.meterdots.l i:nth-child(-n+1),.meterdots.m i:nth-child(-n+2),.meterdots.h i:nth-child(-n+3){background:var(--gold)}
+.meterdots.h i:nth-child(-n+3){background:#e0662f}
+.cost .lvl{font-size:13px;color:var(--ink2);display:block;margin-top:4px}
+@media (max-width:700px){.cost{grid-template-columns:1fr 1fr}.cost p{grid-column:1/-1;margin:0}}
+
+/* Verdict */
+.verdict{background:var(--ink);color:var(--paper);border-radius:28px;padding:40px 36px}
+.verdict h2{color:var(--paper)}
+.verdict .num{color:var(--gold)}
+.checks{list-style:none;padding:0;margin:20px 0;display:grid;gap:10px;max-width:760px}
+.checks li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-size:16.5px}
+.checks .box{width:22px;height:22px;border:2px solid var(--gold);border-radius:6px;margin-top:2px}
+.verdict p{color:color-mix(in srgb,var(--paper) 88%,var(--ink))}
+@media (prefers-color-scheme:dark){.verdict{background:#e9f5f7;color:#0d2a36}.verdict h2{color:#0d2a36}.verdict p{color:#24424e}.verdict .num{color:#8a6500}.checks .box{border-color:#8a6500}}
+
+ .helper{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px;margin:16px 0}
+.hbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.langs button,.hbtn{font:600 14px "Golos Text",sans-serif;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:6px 13px;cursor:pointer;margin-left:4px}
+.langs button[aria-pressed=true],.hbtn.primary{background:var(--ink);color:var(--paper)}
+.hsteps{display:flex;gap:6px;margin:4px 0 14px}.hsteps i{flex:1;height:5px;border-radius:3px;background:var(--line)}.hsteps i.on{background:var(--sky)}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;padding:4px 2px 8px}
+.msg{max-width:80%;padding:11px 15px;border-radius:18px;line-height:1.45}
+.msg.bot{background:var(--wash);border-bottom-left-radius:6px;align-self:flex-start}
+.msg.me{background:var(--sky-deep);color:var(--paper);border-bottom-right-radius:6px;align-self:flex-end}
+.msg ul{margin:6px 0 0;padding-left:20px}.msg li{margin:4px 0}
+.msg pre{white-space:pre-wrap;font:14px/1.5 "Golos Text",sans-serif;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px;margin:8px 0 0}
+.chatin{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.chatin label{display:flex;flex-direction:column;font-size:14px;gap:4px}
+.chatin .chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 14px "Golos Text",sans-serif;border:2px solid var(--sky-deep);background:transparent;color:var(--sky-deep);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--sky-deep);color:var(--paper)}
+.hcard{background:var(--wash);border-radius:14px;padding:16px 18px}
+.hcard h4{font-family:Unbounded,sans-serif;font-size:18px;margin:0 0 8px}
+.hcard ul{margin:6px 0 0;padding-left:20px}
+.hcard pre{white-space:pre-wrap;font:14px/1.5 "Golos Text",sans-serif;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:12px}
+.hnav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.offer{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:18px;padding:22px 24px;margin:26px 0}
+.simout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0 8px}
+.simout .big{font-family:Unbounded,sans-serif;font-weight:700;font-size:28px;display:block}
+.simout span:last-child{font-size:14px;color:var(--ink2)}
+input[type=range]{accent-color:var(--gold);height:30px}
+footer{padding:56px 0 80px;font-size:15.5px;border-top:1px solid var(--line)}
+footer h3{margin-top:28px}
+footer li{margin-bottom:6px}
+.fill{background:var(--gold-pale);padding:14px 16px;border-radius:12px}
+#tip{position:fixed;pointer-events:none;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font:13.5px "Golos Text",sans-serif;box-shadow:0 6px 18px rgba(13,42,54,.18);display:none;z-index:20}
+
+.ladder{display:flex;height:76px;border-radius:14px;overflow:hidden;margin:14px 0 8px;border:1px solid var(--line)}
+.ladder .seg{display:flex;flex-direction:column;justify-content:center;padding:0 14px;min-width:0}
+.ladder .seg b{font-family:Unbounded,sans-serif;font-size:16px}.ladder .seg span{font-size:13px;color:var(--ink2)}
+.ladder .tsa{background:var(--sky-pale)}.ladder .gap{background:var(--gold);color:#0d2a36}.ladder .gap span{color:#0d2a36}.ladder .ok{background:var(--wash)}
+.twobars{display:grid;gap:14px;margin:12px 0}
+.twobars div{display:grid;grid-template-columns:1fr 90px;gap:4px 12px;align-items:center}
+.twobars .lbl{grid-column:1/3;font-size:15px;color:var(--ink2)}
+.twobars i{display:block;height:22px;border-radius:0 6px 6px 0;background:var(--sky)}.twobars div+div i{background:var(--line)}
+.twobars .v{font-weight:700}
+.chips-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chips-row span{background:var(--gold-pale);color:var(--gold-ink);font-weight:600;border-radius:999px;padding:6px 14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.tiles>div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--ink2)}
+.tiles b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.tiles.four{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.tiles.prog em{display:block;font-style:normal;font-weight:700;color:var(--ok);margin-top:8px;font-size:14px}
+.hbars{display:grid;gap:8px;margin:14px 0}
+.hbars div{display:grid;grid-template-columns:130px 1fr 50px;gap:10px;align-items:center;font-size:15px}
+.hbars{position:relative}.hbars i{display:block;height:18px;background:var(--gold);border-radius:0 5px 5px 0}.hbars .lo i{background:var(--sky)}.hbars .avg{position:absolute;top:28px;bottom:0;left:calc(140px + (100% - 200px) * 0.5);border-left:2px dashed var(--ink)}
+.hbars em{font-style:normal;font-weight:600}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 0}
+.door{border-radius:20px;padding:20px 22px;border:2px solid var(--sky)}
+.door.family{border-color:var(--gold)}
+.door .kind{display:inline-block;font-size:13px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--sky-pale);color:var(--sky-deep)}
+.door.family .kind{background:var(--gold-pale);color:var(--gold-ink)}
+.door h3{margin:10px 0 8px;font-size:22px}
+.flow{list-style:none;counter-reset:f;padding:0;margin:0;display:grid;gap:6px}
+.flow li{counter-increment:f;display:grid;grid-template-columns:28px 1fr;align-items:center;font-size:15.5px}
+.flow li::before{content:counter(f);width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;display:grid;place-items:center}
+.when{margin:12px 0 0;font-size:15px;color:var(--ink2)}
+.behind{text-align:center;background:var(--ink);color:var(--paper);border-radius:0 0 20px 20px;padding:12px 16px;margin:0 30px 26px;font-weight:500}
+.behind a{color:var(--gold)}
+.statline{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;margin:14px 0 6px;font-size:15px;color:var(--ink2)}
+.statline b{font-family:Unbounded,sans-serif;font-size:26px;color:var(--ink);margin-right:6px}
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}
+.case{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+.case .kind{font-size:12.5px;font-weight:600;color:var(--sky-deep)}
+.case h4{font-family:Unbounded,sans-serif;font-size:18px;margin:6px 0}
+.case p{margin:4px 0;font-size:15px;color:var(--ink2)}
+.num2{font-family:Unbounded,sans-serif;font-weight:800;font-size:34px;color:var(--ok);margin-top:10px}
+.case .warn{background:var(--gold-pale);color:var(--ink);border-radius:10px;padding:8px 10px;margin-top:10px;font-size:14px}
+.vcols{display:grid;grid-template-columns:1fr 1.3fr;gap:28px;margin-top:10px}
+.vcols h3{color:var(--paper);font-size:19px}.vcols .yes{color:var(--gold)}
+.vcols .checks li{font-size:15.5px}
+.bigline{font-family:Unbounded,sans-serif;font-weight:700;font-size:clamp(22px,3vw,32px);line-height:1.2;color:var(--paper)!important;margin:26px 0 8px}
+.bigline span{color:var(--gold)}
+.timeline{list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:t}
+.timeline li{border-top:3px solid var(--gold);padding:12px 14px 0 0;font-size:15px;color:color-mix(in srgb,var(--paper) 80%,var(--ink));position:relative}
+.timeline li::before{content:"";position:absolute;top:-9px;left:0;width:15px;height:15px;border-radius:50%;background:var(--gold)}
+.timeline b{display:block;color:var(--paper);font-size:17px}
+@media (max-width:760px){.doors,.vcols,.timeline{grid-template-columns:1fr}.behind{margin:0 0 26px;border-radius:20px}.ladder .seg span{display:none}.hbars div{grid-template-columns:100px 1fr 44px}.hbars .avg{left:calc(110px + (100% - 164px) * 0.5)}}
+footer h4{font-size:15px;margin:18px 0 4px}
+footer li a{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Sections"><div class="wrap"><b>We do not live to survive</b><a href="#problem">Problem</a><a href="#data">Data</a><a href="#research">Research</a><a href="#solution">Solution</a><a href="#try">Try it</a><a href="#costs">Costs</a><a href="#verdict">Verdict</a><a href="#about">About</a></div><div class="progress" id="progress"></div></nav>
+
+<header class="hero"><div class="wrap">
+<h1>We do not live to&nbsp;survive</h1>
+<p class="sub">Who Kazakhstan's safety net doesn't see</p>
+<p class="lede">More than a million people in Kazakhstan live below the subsistence minimum. Most get no targeted social assistance (TSA). This project asks how AI can help poor and vulnerable families reach the support that already exists.</p>
+<div class="crowd" id="crowd" role="img" aria-label="20 figures, each about 50,000 poor people; 3 are blue for those receiving TSA, 17 are gold for those who do not"></div>
+<div class="legend"><span><i style="background:var(--sky)"></i>receive TSA: about 167,000 people</span><span><i style="background:var(--gold)"></i>poor, no TSA: about 850,000</span></div>
+<p class="tiny">Each figure is about 50,000 people below the subsistence minimum (1,021,469 in 2025, Bureau of National Statistics). TSA recipients: 167,400 on 1 April 2026 (Ministry of Labour). The two numbers come from different sources and dates, so treat this as a rough picture of scale.</p>
+</div></header>
+
+<section id="problem"><div class="wrap">
+<div class="num">1. The problem</div>
+<h2>Poor by the state's measure, but not poor enough for its help</h2>
+<p>Poverty fell from 18.2% in 2006 to 5.2% in 2023, then stopped at 5%. In 2025 GDP per person grew by 5.2%, yet real wages fell by 1.4% and incomes by 2.3%. Growth did not reach the poor.</p>
+<div class="facts">
+<div class="fact"><span class="big" data-count="5.0" data-dec="1" data-suf="%">5.0%</span><span>below the subsistence minimum, 2025</span></div>
+<div class="fact"><span class="big" data-count="1.02" data-dec="2" data-suf=" m">1.02 m</span><span>people below the line, 2025</span></div>
+<div class="fact g"><span class="big" data-count="22" data-dec="0" data-pre="−" data-suf="%">−22%</span><span>TSA recipients, April 2025 to April 2026</span></div>
+<div class="fact"><span class="big" data-count="84.5" data-dec="1" data-suf="%">84.5%</span><span>of poor people live in households of 5+</span></div>
+</div>
+<p class="tiny">Sources: World Bank Poverty &amp; Equity Brief (2024); World Bank brief (2026) as reported by The Times of Central Asia; Bureau of National Statistics, income differentiation 2025, tables 1 and 3; Ministry of Labour TSA figures for 1 April 2025 (214,000) and 1 April 2026 (167,400).</p>
+<h3>Why the gap exists: two lines, not one</h3>
+<p>Poverty is measured against each region's subsistence minimum, updated every quarter. TSA uses a lower line: in practice 70% of the previous quarter's minimum (Order No. 473). A family between the two lines is poor by the state's own measure, but not "poor enough" for its help.</p>
+<div class="ladder" role="img" aria-label="Income per person: below 50,954 tenge eligible for TSA; between 50,954 and 72,791 poor but not eligible; above 72,791 not poor">
+<div class="seg tsa" style="flex:50954"><b>TSA</b><span>below 50,954 ₸</span></div>
+<div class="seg gap" style="flex:21837"><b>The gap</b><span>poor, no TSA</span></div>
+<div class="seg ok" style="flex:17000"><b>Not poor</b><span>above 72,791 ₸</span></div>
+</div>
+<p class="tiny">Income per person a month. Poverty line: national subsistence minimum, Q3 2026. TSA line: Q4 2026 national average, my calculation as 70% of the Q3 minimum; it ranges from 44,657 ₸ in West Kazakhstan to 56,650 ₸ in Almaty. Check: the published Q3 lines for East Kazakhstan (49,347 ₸) and Zhetisu (45,095 ₸) are exactly 70% of their Q2 minimums.</p>
+<h3>Who is hit hardest</h3>
+<div class="chips-row"><span>Turkestan 8.7%</span><span>Abai 7.7%</span><span>Zhetisu 7.6%</span><span>Mangystau 7.2%</span><span>Households of 5+: 9.3% poor</span><span>Children under 6</span></div>
+<p class="tiny">Regional rates and household size: Bureau of National Statistics (2026), tables 1 and 3. Children under six fall into poverty more often and leave it less often (Kudebayeva, 2018). Astana has the lowest rate, 2.7%.</p>
+<p class="question">How can AI help poor and financially vulnerable families access the support that is already available?</p>
+</div></section>
+
+<section id="data"><div class="wrap">
+<div class="num">2. Background and data</div>
+<h2>Official data show who is poor, not who is about to be</h2>
+<p>The Bureau of National Statistics measures poverty from a quarterly survey of 12,000 households. Income is counted per equivalent adult: the first member counts as 1, each further member as 0.8. TSA counts come from a different source, the Ministry's administrative records.</p>
+<figure>
+<h3>Poverty in 2025 ranged from 2.7% in Astana to 8.7% in Turkestan</h3>
+<div class="note">Share of people below the regional subsistence minimum, 2025. Gold: above the national rate. Dashed line: Kazakhstan, 5.0%.</div>
+<svg id="c1" role="img" aria-label="Bar chart of poverty rate by region, 2025"></svg>
+<figcaption>Eight regions are above the national 5%: most of the south (Turkestan, Zhambyl, Kyzylorda, Shymkent) and the three regions created in 2022 (Abai, Zhetisu, Ulytau). The national average hides how much worse the south is. Source: Bureau of National Statistics (2026), income differentiation 2025, table 1.</figcaption>
+</figure>
+<figure>
+<h3>Living costs differ by a third between regions, and each is measured against its own</h3>
+<div class="note">Each dot is a region: monthly subsistence minimum against poverty rate, 2025. Gold: above the national poverty rate.</div>
+<svg id="c2" role="img" aria-label="Scatter of subsistence minimum against poverty rate, 2025"></svg>
+<figcaption>A higher minimum does not mean more poverty: Mangystau has the highest minimum (about 67,000 ₸) and 7.2% poverty; Astana has a high minimum but the lowest rate, 2.7%; Turkestan, the poorest region, has a low minimum (about 53,000 ₸). Correlation r = 0.05 (my calculation). Source: Bureau of National Statistics (2026), income differentiation 2025, tables 1 and 2. Hover or tap a region.</figcaption>
+</figure>
+<h3>What the data cannot see</h3>
+<div class="tiles">
+<div><b>No panel data</b>No family is followed over time, so no one sees who is one shock away.</div>
+<div><b>A sample, not a register</b>12,000 households give regional rates but can't locate families.</div>
+<div><b>Two sources that don't meet</b>Poverty comes from a survey, TSA from Ministry records, so the gap between them cannot be measured.</div>
+<div><b>TSA coverage unknown</b>The national total is published, but not how many poor people, or which regions, receive TSA.</div>
+<div><b>Poor data quality</b>The state's own AI Concept 2024–2029 admits gaps and duplication.</div>
+</div>
+<h3>How poor are the poor?</h3>
+<p>The poverty rate counts <i>how many</i> people are poor. Poverty depth shows <i>how poor</i> they are: the average gap between the incomes of people below the minimum and the minimum itself (Bureau of National Statistics). Nationally the average poor person is about 16% short (0.8 ÷ 5.0), and closing the whole gap would cost about 145 bn ₸ a year.</p>
+<div class="hbars" role="img" aria-label="Poverty depth by region, 2025, against the national average of 0.8%">
+<p class="tiny" style="margin:0 0 6px">Poverty depth by region, 2025 (%). Dashed line: Kazakhstan average, 0.8%.</p>
+<div><span>Ulytau</span><i style="width:100%"></i><em>1.6%</em></div>
+<div><span>Mangystau</span><i style="width:81%"></i><em>1.3%</em></div>
+<div><span>Abai</span><i style="width:75%"></i><em>1.2%</em></div>
+<div><span>Shymkent (city)</span><i style="width:69%"></i><em>1.1%</em></div>
+<div class="lo"><span>Atyrau</span><i style="width:19%"></i><em>0.3%</em></div>
+<div class="lo"><span>Zhambyl</span><i style="width:19%"></i><em>0.3%</em></div>
+<b class="avg" aria-hidden="true"></b>
+</div>
+</div>
+<p class="tiny">Poverty depth: the average shortfall below the minimum across the whole population. Gold: deeper than the national average; blue: shallower. Selected regions. Severity, which weights the poorest more: 0.2% nationally, 0.7% in Ulytau. Source: Bureau of National Statistics (2026), income differentiation 2025, table 5.</p>
+</div></section>
+
+<section id="research"><div class="wrap">
+<div class="num">3. Current state of research</div>
+<h2>We know who is poor. We don't know who is about to be, or who is missed.</h2>
+<ul class="approaches">
+<li><span class="letter">A</span><div><b>Poverty dynamics in Kazakhstan</b>Up to a quarter of people were persistently poor in 2001–2009, and families with children under six fell in more and climbed out less (Kudebayeva 2018, 2019; Kudebayeva &amp; Barrientos 2017). <span class="miss">No panel data after 2009.</span></div></li>
+<li><span class="letter">B</span><div><b>Vulnerability: who is about to become poor</b>Risk of poverty can be estimated from one survey (Chaudhuri, Jalan &amp; Suryahadi 2002), as was done for Kazakhstan in the 2008–09 crisis (Kudebayeva 2012). Help before a shock works better than after (Pople et al. 2026). <span class="miss">Not measured for today's near-poor.</span></div></li>
+<li><span class="letter">C</span><div><b>Targeting and exclusion</b>Targeted programmes miss many poor people (Brown, Ravallion &amp; van de Walle 2018; Kidd et al. 2017), in Kyrgyzstan (OECD 2018) and Uzbekistan (World Bank 2019) too. Whether targeting or universal transfers do better is disputed (Hanna &amp; Olken 2018). <span class="miss">Kazakhstan's two-line gap is unstudied.</span></div></li>
+<li><span class="letter">D</span><div><b>AI advisers for benefits</b>Language models often get eligibility wrong (Toles et al. 2025); wrong chatbot suggestions mislead caseworkers (Gosciak et al. 2026); people may trust AI too much (Jo et al. 2025). <span class="miss">Only US studies; none in Kazakh or Russian.</span></div></li>
+</ul>
+<p class="question" style="font-size:clamp(18px,2.2vw,22px)">The gap: nobody measures who is one shock from poverty, targeted help misses many of the poor, and no AI tool has been tested to help families in Kazakhstan find what they can claim.</p>
+</div></section>
+
+<section id="solution"><div class="wrap">
+<div class="num">4. The AI-assisted solution</div>
+<h2>One system, two doors: the state looks ahead, the family asks</h2>
+<div class="doors">
+<div class="door state"><span class="kind">The state's door</span><h3>Shock screen</h3>
+<ol class="flow"><li>AI reads this year's statistics</li><li>Proposes the shocks to test</li><li>Analysts approve the list</li><li>Families one shock from poverty get an offer of a visit</li></ol>
+<p class="when">Helps <b>before</b> a family becomes poor</p></div>
+<div class="door family"><span class="kind">The family's door</span><h3>AI adviser</h3>
+<ol class="flow"><li>Family opens a chat in Kazakh or Russian</li><li>Answers a few questions</li><li>Gets the programmes it can apply for</li><li>Plus documents and an appeal draft</li></ol>
+<p class="when">Helps <b>once</b> it is, even if the state can't see its income</p></div>
+</div>
+<div class="behind">Behind both doors: the same <a href="#offers">list of real programmes</a>. Neither door grants, cuts or refuses aid.</div>
+
+<h3>This year's shocks, as the AI would propose them</h3>
+<div class="tiles four">
+<div><b>Prices +9.2%</b>Bureau inflation, October 2026</div>
+<div><b>Job loss</b>Main earner loses all earnings</div>
+<div><b>Utility tariffs</b>Size from each region's tariff decision</div>
+<div><b>Disaster</b>Districts named from emergency reports, like the 2024 floods</div>
+</div>
+<h3 id="try">Try the shock screen</h3>
+<p>Pick a family, tick the shocks, watch the result. Real Bureau lines: Q3 2026 minimum, Q4 2026 TSA line.</p>
+<div class="calc">
+<p class="note" style="margin:0 0 10px">Four example families, one for each possible result:</p>
+<div class="presets" role="group" aria-label="Example families">
+<button type="button" data-p="Turkestan,5,270000,190000,25000">Family of five in Turkestan</button>
+<button type="button" data-p="Turkestan,6,360000,250000,30000">Family of six in Turkestan</button>
+<button type="button" data-p="Kyzylorda,5,180000,150000,20000">Family of five in Kyzylorda</button>
+<button type="button" data-p="Almaty city,3,500000,250000,35000">Two earners in Almaty</button>
+</div>
+<div class="fields">
+<label>Region<select id="f-region"></select></label>
+<label>Family members<input id="f-n" type="number" min="1" max="15" value="5"></label>
+<label>Total family income, tenge a month<input id="f-inc" type="number" min="0" step="1000" value="270000"></label>
+<label>Main earner's earnings, part of the total<input id="f-earn" type="number" min="0" step="1000" value="190000"></label>
+<label>Utility bills, tenge a month<input id="f-bill" type="number" min="0" step="1000" value="25000"></label>
+</div>
+<fieldset class="shocks"><legend>Shocks to test</legend>
+<label><input type="checkbox" id="k-price" checked> Prices rise <b>9.2%</b> <span class="src">official, October 2026</span></label>
+<label><input type="checkbox" id="k-job" checked> Main earner loses all earnings <span class="src">standard scenario</span></label>
+<label><input type="checkbox" id="k-util" checked> Utility tariffs rise <input type="number" id="k-utilp" min="0" max="200" value="15" aria-label="Tariff rise, percent">% <span class="src">example size; would come from tariff decisions</span></label>
+<label><input type="checkbox" id="k-dis"> Natural disaster: family loses <input type="number" id="k-disp" min="0" max="100" value="30" aria-label="Income lost, percent">% of income <span class="src">example size; would come from emergency reports</span></label>
+</fieldset>
+<svg class="meter" id="meter" viewBox="0 0 900 120" role="img" aria-label="Where the family's income sits against the two lines"></svg>
+<div aria-live="polite"><p class="verdictline" id="v-head"></p><p id="v-body" style="margin:0"></p><ul id="v-list" class="shockres"></ul></div>
+<p class="note" style="margin-top:14px">Simplified rules: poverty compares income per equivalent adult (each member after the first counts as 0.8, as the Bureau does) with the regional subsistence minimum; TSA compares income per person with the Q4 2026 TSA line. A price rise is tested as income losing 9.2% of its buying power.</p>
+
+</div>
+<h3>Try the AI adviser</h3>
+<div class="helper" id="helper">
+<div class="hbar"><span class="stamp">Concept demo · not a government service</span><div class="langs" role="group" aria-label="Language"><button data-l="en" aria-pressed="true">EN</button><button data-l="ru">РУС</button><button data-l="kk">ҚАЗ</button></div></div>
+<div class="chat" id="chat" aria-live="polite"></div>
+<div class="chatin" id="chatin"></div>
+<p class="note">A scripted demo: the answers follow fixed rules, using the Q4 2026 regional TSA lines and the 2026 child supplement (6,487.5 ₸ per child aged 1–6). A real version would run a language model limited to the official programme list on eGov, with a link to each source. Not connected to eGov; real eligibility is decided by the akimat. Kazakh text to be checked by a native speaker.</p>
+</div>
+
+<div class="offer" id="offers">
+<h3 style="margin-top:0">The programmes behind both doors</h3>
+<div class="tiles four prog">
+<div><b>Jobs and training</b>Job offers, training, small-business grants<em>raises income</em></div>
+<div><b>Housing help</b>Akimat help with rent and utility bills<em>lowers costs</em></div>
+<div><b>Missed benefits</b>Child, disability and other benefits not yet claimed<em>adds income</em></div>
+<div><b>NGOs</b>Referral when no state option fits<em>short-term relief</em></div>
+</div>
+<div class="statline"><span><b>~59,000</b> job offers sent</span><span><b>~7,500</b> people placed</span><span>by the state's Digital Employment Service (24.kz, 2026)</span></div>
+<p class="tiny">AI suggests job matches; a social worker checks each one. Requests and flags are counted by region every quarter, with no names. Limit: in rural districts there may be little to offer.</p>
+</div>
+<p class="motto">The system notices.<span>A social worker visits.</span><span>The family chooses.</span></p>
+
+<h3>Where this has worked, and where it went wrong</h3>
+<div class="cases">
+<div class="case"><span class="kind">Shock screen's model</span><h4>Nigeria, 2024</h4><p>Google's AI flood forecasts triggered cash before the flood (GiveDirectly).</p><div class="num2">53 of 53</div><p>targeted communities did flood</p><p class="warn"><b>But:</b> people whose records didn't match were cut out, and a third were paid after the peak (The New Humanitarian 2026).</p></div>
+<div class="case"><span class="kind">Adviser's model</span><h4>India, Haqdarshak</h4><p>A platform that matches families to welfare schemes and helps them apply, with trained local agents.</p><div class="num2">~5 m</div><p>people helped to claim benefits in eight years (Haqdarshak, 2023)</p><p class="warn"><b>Note:</b> these are the company's own figures.</p></div>
+<div class="case"><span class="kind">Helping the social worker</span><h4>US, AI assistant for staff</h4><p>An AI chat assistant suggested answers to customer support staff at a large company.</p><div class="num2">+34%</div><p>productivity for novice staff (+14% on average; little effect for experienced staff). <a href="https://www.nber.org/papers/w31161">Brynjolfsson, Li &amp; Raymond (2025)</a>, <i>QJE</i></p><p class="warn"><b>Why it matters:</b> social workers are short-staffed, and new staff gain the most.</p></div>
+</div>
+<p class="tiny">Lessons taken: a social worker decides and every family is told why (Nigeria); a person stands behind the technology (India); the adviser helps new social workers most (US). Unlike Jordan's Takaful, nothing here decides payments.</p>
+</div></section>
+
+
+<section id="costs"><div class="wrap">
+<div class="num">4. What it would cost</div>
+<h2>The software is cheap. Everything around it is not.</h2>
+<div class="costs">
+<div class="cost"><b>Environmental</b><div><div class="meterdots l"><i></i><i></i><i></i></div><span class="lvl">Low–med</span></div><p>The screen is arithmetic. The adviser runs a language model per chat, on a grid that is 62% coal (604 g CO₂/kWh).</p></div>
+<div class="cost"><b>Economic</b><div><div class="meterdots h"><i></i><i></i><i></i></div><span class="lvl">High</span></div><p><b>The deciding cost.</b> More families will ask for help: closing the poverty gap costs ~145 bn ₸ a year, 2.3× the TSA budget, while the 2027 reform aims to <i>save</i> 700 bn.</p></div>
+<div class="cost"><b>Labor</b><div><div class="meterdots m"><i></i><i></i><i></i></div><span class="lvl">Medium</span></div><p>Analysts check the AI's shocks; 12,000 short-staffed social workers do the visits; people must back the chat, since information alone helps mainly the literate (Gupta 2026).</p></div>
+<div class="cost"><b>Governance</b><div><div class="meterdots h"><i></i><i></i><i></i></div><span class="lvl">High</span></div><p>Registry data needs a legal basis (AI Law Art. 17(3)(3)). High-risk under the EU AI Act (Annex III 5(a)); users must know it's an AI (Art. 50). Welfare data can serve control (Earl, Maher &amp; Pan 2022).</p></div>
+<div class="cost"><b>Data ethics</b><div><div class="meterdots m"><i></i><i></i><i></i></div><span class="lvl">Medium</span></div><p>No consent to the screen's use of state data; chats must store nothing. When systems fail, the unprotected "are left to carry the pieces" (Mhlambi 2020).</p></div>
+</div>
+<p class="note">The 145 bn ₸ poverty gap is the author's calculation from the Bureau's 2025 poverty depth; assumptions are in the research paper.</p>
+</div></section>
+
+<section id="verdict"><div class="wrap">
+<div class="verdict">
+<div class="num">Verdict</div>
+<h2>Yes, under conditions</h2>
+<div class="vcols">
+<div><h3>AI adviser: <span class="yes">yes, first</span></h3>
+<ul class="checks">
+<li><span class="box"></span>Answers only from the official list, with sources, and says it is an AI</li>
+<li><span class="box"></span>Stores nothing without consent; shares nothing with the state</li>
+<li><span class="box"></span>Tested in Kazakh and Russian; a person reachable</li>
+</ul></div>
+<div><h3>Shock screen: <span class="yes">yes, after a law and a pilot</span></h3>
+<ul class="checks">
+<li><span class="box"></span>A law, not only a ministerial order, allows this use of registry data (AI Law Art. 17(3)(3))</li>
+<li><span class="box"></span>AI proposes shocks; analysts approve and publish</li>
+<li><span class="box"></span>A flag only adds a visit; a social worker decides (Art. 9, 17(2)(1))</li>
+<li><span class="box"></span>Families told why, can refuse or appeal (Art. 7(2))</li>
+<li><span class="box"></span>Errors audited and published (Art. 6)</li>
+<li><span class="box"></span>Social-worker posts and local programmes funded</li>
+</ul></div>
+</div>
+<p class="bigline">If the money for help is not there, the answer is <span>no</span>.</p>
+<p>Both doors bring more families to ask for help. Paying everyone below the line would cost about 145 bn ₸ a year, 2.3× today's TSA budget, while the 2027 reform aims to save 700 bn ₸. Promises without money break trust: in Nigeria, some families were cut without a reason, and some borrowed money expecting aid that never came.</p>
+<p>Nothing here has been tested on real families, so it starts small:</p>
+<ol class="timeline"><li><b>Pilot</b>districts in Ulytau, Mangystau or Abai, the regions with the deepest poverty</li><li><b>Compare</b>with similar districts that start a year later</li><li><b>Scale</b>only if take-up and incomes rise and the poverty gap falls</li></ol>
+</div>
+</div></section>
+
+
+
+<footer id="about"><div class="wrap">
+<h3>Origin of the project</h3>
+<p>This project continues our team entry to STAT.DATATHON-2026. In the competition, my teammate and I built AI that helps identify poor people who did not receive targeted social assistance. For this final project for PLS519, I separated my own contribution from the teamwork and added more of my own ideas to develop <i>We do not live to survive</i>.</p>
+<h3>AI transparency statement</h3>
+<p>While for my previous projects I used GPT, this time I relied on Claude. From start to finish, the website was created by AI: the coding, the design and help with finding sources. To explain my thoughts better, I also used AI to fix my sentences: I wrote each sentence myself, and when it did not convey my idea, I asked AI to help me fix it. This happened for 5–6 sentences. AI also helped create the figures for Section 2.</p>
+<h3>Main sources</h3>
+<ul>
+<li>Bureau of National Statistics (2026). <a href="https://stat.gov.kz/ru/industries/labour-and-income/stat-life/publications/341346/">Main indicators of income differentiation, 2025</a>; <a href="https://stat.gov.kz/ru/industries/economy/prices/spreadsheets/?name=18621">regional subsistence minimum, 2026</a>.</li>
+<li>Ministry of Labour. <a href="https://zakon.uchet.kz/rus/docs/V2400035497">Order No. 473 (2024)</a> on the poverty line; TSA figures for <a href="https://www.gov.kz/memleket/entities/enbek/press/news/details/977763">2025</a> and <a href="https://bizmedia.kz/2026-04-08-skolko-kazahstanczev-poluchili-adresnuyu-soczpomoshh-v-2026-godu/">2026</a>.</li>
+<li>World Bank (2024). <a href="https://documents1.worldbank.org/curated/en/099131501062539519/pdf/IDU-bb40126f-2ebc-4946-b5ea-9b797b47f5da.pdf">Kazakhstan Poverty &amp; Equity Brief</a>.</li>
+<li>Kudebayeva, A. (2018). <a href="https://ei.cerge-ei.cz/pdf/wp/Wp627.pdf">Chronic poverty in Kazakhstan</a>. CERGE-EI.</li>
+<li>Brown, C., Ravallion, M. &amp; van de Walle, D. (2018). <a href="https://doi.org/10.1016/j.jdeveco.2018.05.004">A poor means test?</a> <i>Journal of Development Economics</i>.</li>
+<li>Gosciak, J. et al. (2026). <a href="https://arxiv.org/abs/2603.11213">LLMs in social services</a>.</li>
+<li>Cases: <a href="https://www.givedirectly.org/flood-forecast-ai">GiveDirectly (2025)</a> and <a href="https://www.thenewhumanitarian.org/investigations/2026/08/31/givedirectlys-ai-experiment-left-vulnerable-flood-victims-behind-nigeria">The New Humanitarian (2026)</a> on Nigeria; <a href="https://haqdarshak.com/?p=11359">Haqdarshak (2023)</a>; <a href="https://www.nber.org/papers/w31161">Brynjolfsson, Li &amp; Raymond (2025)</a>.</li>
+<li>Law No. 230-VIII <a href="https://zakon.uchet.kz/rus/docs/Z2500000230">"On Artificial Intelligence" (2025)</a>; <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act (2024)</a>.</li>
+</ul>
+<p class="note">The full list of sources is available in the research paper.</p>
+</div></footer>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const D=[{"ru": "Республика Казахстан", "en": "Kazakhstan", "sm": 57116, "tsa": 39981, "pov": 5.0, "sm26": 72791, "tsa26": 50954}, {"ru": "Абай", "en": "Abai", "sm": 57127, "tsa": 39989, "pov": 7.7, "sm26": 73473, "tsa26": 51431}, {"ru": "Акмолинская", "en": "Akmola", "sm": 57089, "tsa": 39962, "pov": 5.0, "sm26": 69183, "tsa26": 48428}, {"ru": "Актюбинская", "en": "Aktobe", "sm": 51703, "tsa": 36192, "pov": 4.5, "sm26": 67629, "tsa26": 47340}, {"ru": "Алматинская", "en": "Almaty region", "sm": 61257, "tsa": 42880, "pov": 3.8, "sm26": 74341, "tsa26": 52039}, {"ru": "Атырауская", "en": "Atyrau", "sm": 52905, "tsa": 37034, "pov": 3.1, "sm26": 66689, "tsa26": 46682}, {"ru": "Западно-Казахстанская", "en": "West Kazakhstan", "sm": 51609, "tsa": 36126, "pov": 4.1, "sm26": 63796, "tsa26": 44657}, {"ru": "Жамбылская", "en": "Zhambyl", "sm": 54190, "tsa": 37933, "pov": 5.3, "sm26": 71026, "tsa26": 49718}, {"ru": "Жетісу", "en": "Zhetisu", "sm": 55365, "tsa": 38756, "pov": 7.6, "sm26": 69009, "tsa26": 48306}, {"ru": "Карагандинская", "en": "Karaganda", "sm": 55604, "tsa": 38923, "pov": 3.2, "sm26": 69656, "tsa26": 48759}, {"ru": "Костанайская", "en": "Kostanay", "sm": 53957, "tsa": 37770, "pov": 3.6, "sm26": 71626, "tsa26": 50138}, {"ru": "Кызылординская", "en": "Kyzylorda", "sm": 50722, "tsa": 35505, "pov": 5.2, "sm26": 68223, "tsa26": 47756}, {"ru": "Мангистауская", "en": "Mangystau", "sm": 66977, "tsa": 46884, "pov": 7.2, "sm26": 78678, "tsa26": 55075}, {"ru": "Павлодарская", "en": "Pavlodar", "sm": 53956, "tsa": 37769, "pov": 4.1, "sm26": 68968, "tsa26": 48278}, {"ru": "Северо-Казахстанская", "en": "North Kazakhstan", "sm": 56578, "tsa": 39605, "pov": 4.5, "sm26": 70809, "tsa26": 49566}, {"ru": "Туркестанская", "en": "Turkestan", "sm": 53062, "tsa": 37143, "pov": 8.7, "sm26": 66886, "tsa26": 46820}, {"ru": "Ұлытау", "en": "Ulytau", "sm": 58397, "tsa": 40878, "pov": 6.1, "sm26": 71614, "tsa26": 50130}, {"ru": "Восточно-Казахстанская", "en": "East Kazakhstan", "sm": 60944, "tsa": 42661, "pov": 3.9, "sm26": 76283, "tsa26": 53398}, {"ru": "г.Астана", "en": "Astana", "sm": 60947, "tsa": 42663, "pov": 2.7, "sm26": 75486, "tsa26": 52840}, {"ru": "г.Алматы", "en": "Almaty city", "sm": 59860, "tsa": 41902, "pov": 4.3, "sm26": 80928, "tsa26": 56650}, {"ru": "г.Шымкент", "en": "Shymkent", "sm": 56100, "tsa": 39270, "pov": 5.5, "sm26": 70675, "tsa26": 49472}];
+const KZ=D.find(d=>d.en==="Kazakhstan"),R=D.filter(d=>d.en!=="Kazakhstan");
+const NS="http://www.w3.org/2000/svg",fmt=n=>Math.round(n).toLocaleString("en-US");
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const tip=document.getElementById("tip");
+function show(ev,d){tip.innerHTML=`<b>${d.en}</b><br>Poverty rate, 2025: ${d.pov.toFixed(1)}%<br>Subsistence minimum, 2025: ${fmt(d.sm)} ₸<br>Minimum, Q3 2026: ${fmt(d.sm26)} ₸<br>TSA line, Q4 2026: ${fmt(d.tsa26)} ₸`;tip.style.display="block";tip.style.left=Math.min(ev.clientX+14,innerWidth-230)+"px";tip.style.top=(ev.clientY+14)+"px"}
+function hide(){tip.style.display="none"}
+
+// Reading progress
+addEventListener("scroll",()=>{const h=document.documentElement;document.getElementById("progress").style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%"},{passive:true});
+
+// Hero crowd: 20 figures, 3 turn blue once
+(function(){const c=document.getElementById("crowd");
+ const P='<svg viewBox="0 0 20 44" aria-hidden="true"><g class="p"><circle cx="10" cy="7" r="6"/><path d="M2 44V24a8 8 0 0 1 16 0v20z"/></g></svg>';
+ for(let i=0;i<20;i++)c.insertAdjacentHTML("beforeend",P);
+ const figs=[...c.querySelectorAll(".p")],blue=[2,9,15];
+ const go=()=>blue.forEach((i,k)=>setTimeout(()=>{figs[i].classList.add("tsa");if(!reduce)figs[i].animate([{transform:"translateY(0)"},{transform:"translateY(-6px)"},{transform:"translateY(0)"}],{duration:450})},reduce?0:600+k*450));
+ go();
+})();
+
+// Count-up numbers, once, when the facts row appears
+(function(){const nums=[...document.querySelectorAll("[data-count]")];if(reduce||!("IntersectionObserver" in window))return;
+ const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const t=e.target,end=+t.dataset.count,dec=+t.dataset.dec,pre=t.dataset.pre||"",suf=t.dataset.suf||"",t0=performance.now();
+  const step=now=>{const k=Math.min(1,(now-t0)/900),v=end*(1-Math.pow(1-k,3));t.textContent=pre+v.toFixed(dec)+suf;if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)})},{threshold:.6});
+ nums.forEach(n=>io.observe(n));
+})();
+
+// Chart 1: bars
+(function(){const s=document.getElementById("c1"),rows=[...R].sort((a,b)=>b.pov-a.pov);
+ const L=132,W=860,rh=23,T=8,H=T+rows.length*rh+26,max=10,x=v=>L+v/max*(W-L-40);
+ s.setAttribute("viewBox",`0 0 ${W} ${H}`);
+ for(let v=0;v<=max;v+=2){el("line",{x1:x(v),x2:x(v),y1:T,y2:H-22,stroke:css("--line")},s);const t=el("text",{x:x(v),y:H-6,"text-anchor":"middle"},s);t.textContent=v+"%"}
+ rows.forEach((d,i)=>{const y=T+i*rh,w=x(d.pov)-L,h=rh-7,r=4,hi=d.pov>KZ.pov;
+  const lb=el("text",{x:L-8,y:y+rh/2+4,"text-anchor":"end",fill:css("--ink")},s);lb.textContent=d.en;
+  el("path",{fill:hi?css("--gold"):css("--sky"),d:`M${L},${y+3}h${w-r}a${r},${r} 0 0 1 ${r},${r}v${h-2*r}a${r},${r} 0 0 1 -${r},${r}h-${w-r}z`},s);
+  const v=el("text",{x:x(d.pov)+6,y:y+rh/2+4},s);v.textContent=d.pov.toFixed(1);
+  const hit=el("rect",{x:0,y,width:W,height:rh,fill:"transparent"},s);hit.addEventListener("mousemove",e=>show(e,d));hit.addEventListener("mouseleave",hide)});
+ el("line",{x1:x(KZ.pov),x2:x(KZ.pov),y1:T-4,y2:H-22,stroke:css("--ink"),"stroke-dasharray":"4 3","stroke-width":1.5},s);
+})();
+
+// Chart 2: scatter
+(function(){const s=document.getElementById("c2"),W=860,H=380,L=56,B=44,T=12,Rr=20;
+ const x0=48000,x1=70000,x=v=>L+(v-x0)/(x1-x0)*(W-L-Rr),y=v=>H-B-v/10*(H-B-T);
+ s.setAttribute("viewBox",`0 0 ${W} ${H}`);
+ for(let v=0;v<=10;v+=2){el("line",{x1:L,x2:W-Rr,y1:y(v),y2:y(v),stroke:css("--line")},s);const t=el("text",{x:L-8,y:y(v)+4,"text-anchor":"end"},s);t.textContent=v+"%"}
+ for(let v=50000;v<=70000;v+=5000){const t=el("text",{x:x(v),y:H-B+18,"text-anchor":"middle"},s);t.textContent=fmt(v)}
+ const ax=el("text",{x:(L+W-Rr)/2,y:H-6,"text-anchor":"middle"},s);ax.textContent="Subsistence minimum, 2025 (tenge per person per month)";
+ el("line",{x1:L,x2:W-Rr,y1:y(KZ.pov),y2:y(KZ.pov),stroke:css("--ink"),"stroke-dasharray":"4 3","stroke-width":1.5},s);
+ const kl=el("text",{x:W-Rr,y:y(KZ.pov)-6,"text-anchor":"end"},s);kl.textContent="Kazakhstan 5.0%";
+ const named={"Turkestan":[9,-10,"start"],"Abai":[9,4,"start"],"Zhetisu":[-9,4,"end"],"Mangystau":[-9,-8,"end"],"Astana":[9,14,"start"],"Almaty region":[9,4,"start"],"Kyzylorda":[9,4,"start"],"Atyrau":[9,4,"start"]};
+ R.forEach(d=>{const cx=x(d.sm),cy=y(d.pov);el("circle",{cx,cy,r:7,fill:d.pov>KZ.pov?css("--gold"):css("--sky"),stroke:css("--paper"),"stroke-width":2},s);
+  if(named[d.en]){const[dx,dy,a]=named[d.en];const t=el("text",{x:cx+dx,y:cy+dy,"text-anchor":a,fill:css("--ink")},s);t.textContent=d.en}
+  const hit=el("circle",{cx,cy,r:15,fill:"transparent"},s);hit.addEventListener("mousemove",e=>show(e,d));hit.addEventListener("mouseleave",hide)});
+})();
+
+// Calculator with meter
+(function(){const sel=document.getElementById("f-region");
+ [...R].sort((a,b)=>a.en.localeCompare(b.en)).forEach(d=>{const o=document.createElement("option");o.value=d.en;o.textContent=d.en;sel.appendChild(o)});sel.value="Turkestan";
+ const [fn,fi,fe]=["f-n","f-inc","f-earn"].map(i=>document.getElementById(i));
+ const s=document.getElementById("meter"),L=20,W=880,x=p=>L+Math.max(0,Math.min(150,p))/150*(W-L-20);
+ const band=(a,b,f)=>el("rect",{x:x(a),y:36,width:x(b)-x(a),height:30,fill:f,rx:0},s);
+ band(0,70,css("--sky-pale"));band(70,100,css("--gold-pale"));band(100,150,css("--wash"));
+ el("rect",{x:L,y:36,width:W-L-20,height:30,fill:"none",stroke:css("--line")},s);
+ const ln=(p,c,t,dy)=>{el("line",{x1:x(p),x2:x(p),y1:28,y2:74,stroke:c,"stroke-width":3},s);const e=el("text",{x:x(p),y:92+dy,"text-anchor":"middle","font-weight":600,fill:c},s);e.textContent=t};
+ ln(70,css("--sky-deep"),"TSA line",0);ln(100,css("--ink"),"Poverty line",0);
+ const g1=el("text",{x:(x(70)+x(100))/2,y:56,"text-anchor":"middle","font-weight":700,fill:css("--gold-ink")},s);g1.textContent="the gap";
+ const m=el("g",{id:"marker"},s);el("path",{d:"M0 0 l-9 -14 h18 z",fill:css("--ink")},m);el("circle",{cx:0,cy:-22,r:9,fill:css("--gold"),stroke:css("--ink"),"stroke-width":2},m);
+ const mt=el("text",{x:0,y:-38,"text-anchor":"middle","font-weight":700,fill:css("--ink")},m);
+ const head=document.getElementById("v-head"),body=document.getElementById("v-body");
+ const ids=["f-n","f-inc","f-earn","f-bill","k-price","k-job","k-util","k-utilp","k-dis","k-disp"],$=i=>document.getElementById(i),fb=$("f-bill"),list=$("v-list");
+ function run(){const d=R.find(r=>r.en===sel.value),n=Math.max(1,+fn.value||1),inc=Math.max(0,+fi.value||0),earn=Math.min(inc,Math.max(0,+fe.value||0)),bill=Math.max(0,+fb.value||0);
+  const eq=1+0.8*(n-1),perEq=inc/eq,perCap=inc/n,sm=d.sm26,tsa=d.tsa26,pct=perEq/sm*100;
+  m.setAttribute("transform",`translate(${x(pct)},36)`);mt.textContent=Math.round(pct)+"% of the line";
+  const sh=[];
+  if($("k-price").checked)sh.push(["Prices rise 9.2%",inc/1.092]);
+  if($("k-job").checked)sh.push(["Main earner loses all earnings",inc-earn]);
+  if($("k-util").checked){const r=Math.max(0,+$("k-utilp").value||0);sh.push([`Utility tariffs rise ${r}%`,inc-bill*r/100])}
+  if($("k-dis").checked){const r=Math.min(100,Math.max(0,+$("k-disp").value||0));sh.push([`Disaster: ${r}% of income lost`,inc*(1-r/100)])}
+  let cls,h,b,items="";
+  if(perCap<tsa){cls="tsa";h="Already below the TSA line";b=`Income per person (${fmt(perCap)} ₸) is below the TSA line in ${d.en} (${fmt(tsa)} ₸). Not a shock case: the family is eligible now, and the AI adviser would help it apply.`}
+  else if(perEq<sm){cls="gap";h="Already poor, but not eligible for TSA";b=`Income per equivalent adult is ${fmt(perEq)} ₸, below the subsistence minimum of ${fmt(sm)} ₸, but income per person (${fmt(perCap)} ₸) is above the TSA line (${fmt(tsa)} ₸). Not a shock case: the family is poor already. The AI adviser would point it to help that does not depend on TSA: employment programmes, akimat housing assistance, other benefits, or an NGO.`}
+  else{const res=sh.map(([t,v])=>({t,v:v/eq,fall:v/eq<sm}));const hits=res.filter(r=>r.fall);
+   items=res.map(r=>`<li><b>${r.t}:</b> ${fmt(r.v)} ₸ per equivalent adult, ${r.fall?"<b>falls below</b>":"stays above"} the minimum</li>`).join("");
+   if(!sh.length){cls="ok";h="No shocks selected";b="Tick at least one shock to test the family."}
+   else if(hits.length){cls="gap";h="Flagged: one shock away";b=`Above the line today (${fmt(perEq)} ₸ against ${fmt(sm)} ₸), but ${hits.length} of ${sh.length} tested shocks would push the family below it. The shock screen would offer a visit before the shock hits, with the programme list.`}
+   else{cls="ok";h="Above the line, and it holds";b=`Income per equivalent adult (${fmt(perEq)} ₸) stays above the minimum (${fmt(sm)} ₸) after every tested shock. No flag.`}}
+  head.className="verdictline "+cls;head.textContent=h;body.textContent=b;list.innerHTML=items}
+ const pb=document.querySelectorAll(".presets button[data-p]");
+ [sel,...ids.map($)].forEach(i=>i.addEventListener("input",()=>{if(i.type!=="checkbox"&&!i.id.startsWith("k-"))pb.forEach(b=>b.setAttribute("aria-pressed","false"));run()}));
+ pb.forEach(btn=>btn.addEventListener("click",()=>{const[r,n,i,e,bl]=btn.dataset.p.split(",");sel.value=r;fn.value=n;fi.value=i;fe.value=e;fb.value=bl;pb.forEach(b=>b.setAttribute("aria-pressed",b===btn));run()}));
+ pb[0].setAttribute("aria-pressed","true");run();
+})();
+
+
+
+// AI adviser chat (scripted concept demo)
+(function(){
+const T={
+en:{hi:"Hello. I'm an AI adviser. I can tell you which programmes your family may apply for. I don't decide anything, and nothing you type leaves this page.",start:"Start",send:"Send",
+q1:"Which region do you live in?",q2:"How many people live in your family, and how many children?",n:"Family members",kids:"Children under 18",small:"Of them, aged 1–6",
+q3:"What was your family's total income per month last quarter, in tenge?",inc:"Income, ₸ a month",
+q4:"Does any of this apply to you? Pick all that fit.",sit:{nojob:"Someone of working age has no job",rent:"We rent our home",bills:"Utility bills are hard to pay",dis:"Someone has a disability"},none:"None of these",
+me1:"{region}",me2:"{n} people, {kids} children ({small} aged 1–6)",me3:"{inc} ₸ a month",
+res:"Here is what your family may apply for:",
+tsaY:"<b>Targeted social assistance (TSA).</b> Income per person, {pc} ₸, is below the TSA line in {region} ({line} ₸). Estimated payment: about {amt} ₸ a month, including the supplement for children aged 1–6. Apply on eGov or at your akimat.",
+tsaN:"<b>TSA: probably not.</b> Income per person, {pc} ₸, is above the TSA line in {region} ({line} ₸). Other help below does not depend on it.",
+large:"<b>Benefit for large families.</b> With four or more children under 18, you can apply on eGov, whatever your income.",
+job:"<b>Employment centre programmes.</b> Job offers, vocational training and small-business grants; vacancies are also on Enbek.kz.",
+house:"<b>Akimat housing assistance.</b> Helps with rent and utility bills when they take too large a share of family income. Apply at your akimat or on eGov.",
+dis:"<b>Disability benefit and social services.</b> Check the disability benefit and services on eGov.",
+ngo:"If none of this fits, ask your akimat's social worker about local NGOs and charities.",
+src:"Each answer would link to its official page. Check the current rules there.",
+next:"What else can I help with?",c_docs:"What documents do I need?",c_ref:"I was refused TSA",c_new:"Start again",
+docs:"Documents to prepare, usually:",docl:["ID cards of adult family members","children's birth certificates","income for the last quarter (much is checked automatically)","bank account details for payments"],
+ref:"You can ask for the reason in writing and appeal. Here is a draft you can change:",
+letter:"To the akimat of {region}.\nOn [date] my family's application for targeted social assistance was refused. Our average income per person is {pc} ₸, below the region's TSA line of {line} ₸. I ask you to explain the reason for the refusal in writing and to review my application.\n[Full name, IIN, phone]"},
+ru:{hi:"Здравствуйте. Я ИИ-консультант. Подскажу, на какие программы может подать ваша семья. Я ничего не решаю, и всё, что вы пишете, остаётся на этой странице.",start:"Начать",send:"Отправить",
+q1:"В каком регионе вы живёте?",q2:"Сколько человек в семье и сколько детей?",n:"Членов семьи",kids:"Детей до 18 лет",small:"Из них от 1 до 6 лет",
+q3:"Каким был общий доход семьи в месяц в прошлом квартале, в тенге?",inc:"Доход, ₸ в месяц",
+q4:"Что из этого относится к вам? Выберите всё подходящее.",sit:{nojob:"Кто-то трудоспособный не работает",rent:"Мы снимаем жильё",bills:"Трудно платить за коммунальные услуги",dis:"У кого-то есть инвалидность"},none:"Ничего из этого",
+me1:"{region}",me2:"{n} чел., детей: {kids} (от 1 до 6 лет: {small})",me3:"{inc} ₸ в месяц",
+res:"Вот на что может подать ваша семья:",
+tsaY:"<b>Адресная социальная помощь (АСП).</b> Доход на человека, {pc} ₸, ниже черты АСП в регионе {region} ({line} ₸). Примерная выплата: около {amt} ₸ в месяц, включая доплату на детей от 1 до 6 лет. Подать можно на eGov или в акимате.",
+tsaN:"<b>АСП: скорее всего, нет.</b> Доход на человека, {pc} ₸, выше черты АСП в регионе {region} ({line} ₸). Помощь ниже от этого не зависит.",
+large:"<b>Пособие многодетным семьям.</b> При четырёх и более детях до 18 лет можно подать на eGov независимо от дохода.",
+job:"<b>Программы центра занятости.</b> Предложения работы, профобучение и гранты на своё дело; вакансии также на Enbek.kz.",
+house:"<b>Жилищная помощь от акимата.</b> Помогает оплатить аренду и коммунальные услуги, если они занимают слишком большую долю дохода семьи. Подать можно в акимате или на eGov.",
+dis:"<b>Пособие по инвалидности и социальные услуги.</b> Проверьте пособие и услуги на eGov.",
+ngo:"Если ничего не подходит, спросите социального работника акимата о местных НКО и благотворительных организациях.",
+src:"Каждый ответ давал бы ссылку на официальную страницу. Проверяйте действующие правила там.",
+next:"Чем ещё помочь?",c_docs:"Какие нужны документы?",c_ref:"Мне отказали в АСП",c_new:"Сначала",
+docs:"Обычно нужно подготовить:",docl:["удостоверения личности взрослых членов семьи","свидетельства о рождении детей","сведения о доходах за прошлый квартал (многое проверяется автоматически)","реквизиты банковского счёта для выплат"],
+ref:"Вы можете письменно запросить причину отказа и обжаловать его. Вот черновик, который можно изменить:",
+letter:"В акимат ({region}).\n[дата] моей семье отказали в назначении адресной социальной помощи. Среднедушевой доход нашей семьи — {pc} ₸, это ниже черты АСП по региону ({line} ₸). Прошу письменно объяснить причину отказа и пересмотреть заявление.\n[ФИО, ИИН, телефон]"},
+kk:{hi:"Сәлеметсіз бе. Мен ЖИ-кеңесшімін. Отбасыңыз қандай бағдарламаларға өтініш бере алатынын айтамын. Мен ештеңе шешпеймін, ал жазғаныңыздың бәрі осы бетте қалады.",start:"Бастау",send:"Жіберу",
+q1:"Қай өңірде тұрасыз?",q2:"Отбасыңызда неше адам және неше бала бар?",n:"Отбасы мүшелері",kids:"18 жасқа дейінгі балалар",small:"Оның ішінде 1–6 жастағылар",
+q3:"Өткен тоқсанда отбасыңыздың айлық жалпы табысы қанша болды, теңгемен?",inc:"Табыс, айына ₸",
+q4:"Осылардың қайсысы сізге қатысты? Барлық сәйкесін таңдаңыз.",sit:{nojob:"Еңбекке қабілетті біреу жұмыссыз",rent:"Үйді жалдап тұрамыз",bills:"Коммуналдық төлемдерді төлеу қиын",dis:"Біреудің мүгедектігі бар"},none:"Ешқайсысы",
+me1:"{region}",me2:"{n} адам, {kids} бала (1–6 жастағы: {small})",me3:"Айына {inc} ₸",
+res:"Отбасыңыз мыналарға өтініш бере алады:",
+tsaY:"<b>Атаулы әлеуметтік көмек (АӘК).</b> Жан басына табыс, {pc} ₸, {region} өңіріндегі АӘК шегінен ({line} ₸) төмен. Болжамды төлем: айына шамамен {amt} ₸, 1–6 жастағы балаларға қосымша төлемді қоса алғанда. eGov арқылы немесе әкімдікте өтініш беруге болады.",
+tsaN:"<b>АӘК: мүмкін емес.</b> Жан басына табыс, {pc} ₸, {region} өңіріндегі АӘК шегінен ({line} ₸) жоғары. Төмендегі көмек бұған байланысты емес.",
+large:"<b>Көпбалалы отбасыларға жәрдемақы.</b> 18 жасқа дейінгі төрт және одан көп бала болса, табысқа қарамастан eGov арқылы өтініш беруге болады.",
+job:"<b>Жұмыспен қамту орталығының бағдарламалары.</b> Жұмыс ұсыныстары, кәсіптік оқыту және өз ісіне грант; бос орындар Enbek.kz сайтында да бар.",
+house:"<b>Әкімдіктің тұрғын үй көмегі.</b> Жалдау және коммуналдық төлемдер отбасы табысының тым үлкен бөлігін алса, көмектеседі. Әкімдікте немесе eGov арқылы өтініш беруге болады.",
+dis:"<b>Мүгедектігі бойынша жәрдемақы және әлеуметтік қызметтер.</b> Жәрдемақы мен қызметтерді eGov-тан тексеріңіз.",
+ngo:"Егер ешқайсысы сәйкес келмесе, әкімдіктің әлеуметтік қызметкерінен жергілікті ҮЕҰ мен қайырымдылық ұйымдары туралы сұраңыз.",
+src:"Әр жауап ресми бетке сілтеме берер еді. Қолданыстағы ережелерді сол жерден тексеріңіз.",
+next:"Тағы немен көмектесейін?",c_docs:"Қандай құжаттар керек?",c_ref:"Маған АӘК-тен бас тартты",c_new:"Басынан бастау",
+docs:"Әдетте мыналарды дайындау керек:",docl:["отбасының ересек мүшелерінің жеке куәліктері","балалардың туу туралы куәліктері","өткен тоқсандағы табыс туралы мәліметтер (көбі автоматты түрде тексеріледі)","төлем алуға арналған банк шотының деректемелері"],
+ref:"Бас тарту себебін жазбаша сұрап, шағым жасай аласыз. Өзгертуге болатын жоба:",
+letter:"{region} әкімдігіне.\n[күні] менің отбасыма атаулы әлеуметтік көмек тағайындаудан бас тартылды. Отбасымыздың жан басына шаққандағы орташа табысы — {pc} ₸, бұл өңірдегі АӘК шегінен ({line} ₸) төмен. Бас тарту себебін жазбаша түсіндіруді және өтінішімді қайта қарауды сұраймын.\n[Аты-жөні, ЖСН, телефон]"}};
+let L="en",stage=0,hist=[],a={region:"Turkestan",n:5,kids:3,small:2,inc:270000,sit:[]};
+const chat=document.getElementById("chat"),inp=document.getElementById("chatin");
+const fill=(t,o)=>t.replace(/\{(\w+)\}/g,(_,k)=>o[k]);
+function calc(){const d=R.find(r=>r.en===a.region),pc=a.inc/a.n,line=d.tsa26,ok=pc<line;
+ return{ok,pc:fmt(pc),line:fmt(line),region:L==='en'?d.en:(d.ru||d.en),amt:fmt(ok?Math.max(0,(line-pc)*a.n)+a.small*6487.5:0),n:a.n,kids:a.kids,small:a.small,inc:fmt(a.inc)}}
+const say=(who,f)=>hist.push({who,f});
+function result(t){const c=calc(),items=[c.ok?fill(t.tsaY,c):fill(t.tsaN,c)];
+ if(a.kids>=4)items.push(t.large);if(a.sit.includes("nojob"))items.push(t.job);
+ if(a.sit.includes("rent")||a.sit.includes("bills"))items.push(t.house);if(a.sit.includes("dis"))items.push(t.dis);
+ return `${t.res}<ul>${items.map(i=>`<li>${i}</li>`).join("")}</ul><p style="margin:8px 0 0">${t.ngo}</p><p class="note" style="margin:6px 0 0">${t.src}</p>`}
+function draw(){const t=T[L];
+ chat.innerHTML=hist.map(m=>`<div class="msg ${m.who}">${m.f(t)}</div>`).join("");chat.scrollTop=chat.scrollHeight;
+ let h="";
+ if(stage===0)h=`<button class="hbtn primary" data-act="start">${t.start}</button>`;
+ if(stage===1)h=`<label style="min-width:220px">${t.q1}<select id="c-r">${[...R].sort((x,y)=>x.en.localeCompare(y.en)).map(d=>`<option ${d.en===a.region?"selected":""}>${d.en}</option>`).join("")}</select></label><button class="hbtn primary" data-act="s1">${t.send}</button>`;
+ if(stage===2)h=`<label>${t.n}<input id="c-n" type="number" min="1" max="15" value="${a.n}"></label><label>${t.kids}<input id="c-k" type="number" min="0" max="14" value="${a.kids}"></label><label>${t.small}<input id="c-s" type="number" min="0" max="10" value="${a.small}"></label><button class="hbtn primary" data-act="s2">${t.send}</button>`;
+ if(stage===3)h=`<label>${t.inc}<input id="c-i" type="number" min="0" step="1000" value="${a.inc}"></label><button class="hbtn primary" data-act="s3">${t.send}</button>`;
+ if(stage===4)h=`<div class="chips">${Object.keys(t.sit).map(k=>`<button class="chip" data-sit="${k}" aria-pressed="${a.sit.includes(k)}">${t.sit[k]}</button>`).join("")}</div><button class="hbtn primary" data-act="s4">${t.send}</button>`;
+ if(stage===5)h=`<div class="chips"><button class="chip" data-act="docs">${t.c_docs}</button><button class="chip" data-act="ref">${t.c_ref}</button><button class="chip" data-act="new">${t.c_new}</button></div>`;
+ inp.innerHTML=h}
+function reset(){hist=[];a.sit=[];stage=0;say("bot",t=>t.hi);draw()}
+inp.addEventListener("click",e=>{const s=e.target.closest("[data-sit]");if(s){const k=s.dataset.sit;a.sit=a.sit.includes(k)?a.sit.filter(x=>x!==k):[...a.sit,k];s.setAttribute("aria-pressed",a.sit.includes(k));return}
+ const b=e.target.closest("[data-act]");if(!b)return;const v=id=>document.getElementById(id).value,act=b.dataset.act;
+ if(act==="start"){say("me",t=>t.start);say("bot",t=>t.q1);stage=1}
+ if(act==="s1"){a.region=v("c-r");say("me",t=>fill(t.me1,calc()));say("bot",t=>t.q2);stage=2}
+ if(act==="s2"){a.n=Math.max(1,+v("c-n")||1);a.kids=Math.max(0,+v("c-k")||0);a.small=Math.min(a.kids,Math.max(0,+v("c-s")||0));say("me",t=>fill(t.me2,calc()));say("bot",t=>t.q3);stage=3}
+ if(act==="s3"){a.inc=Math.max(0,+v("c-i")||0);say("me",t=>fill(t.me3,calc()));say("bot",t=>t.q4);stage=4}
+ if(act==="s4"){const sit=[...a.sit];say("me",t=>sit.length?sit.map(k=>t.sit[k]).join("; "):t.none);say("bot",t=>result(t));say("bot",t=>t.next);stage=5}
+ if(act==="docs"){say("me",t=>t.c_docs);say("bot",t=>`${t.docs}<ul>${t.docl.map(o=>`<li>${o}</li>`).join("")}</ul>`)}
+ if(act==="ref"){say("me",t=>t.c_ref);say("bot",t=>`${t.ref}<pre>${fill(t.letter,calc())}</pre>`)}
+ if(act==="new"){reset();return}
+ draw()});
+document.querySelectorAll(".langs button").forEach(b=>b.addEventListener("click",()=>{L=b.dataset.l;document.querySelectorAll(".langs button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()}));
+reset();
+})();
+</script>
+</body>
+</html>
